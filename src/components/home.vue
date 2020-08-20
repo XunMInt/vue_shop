@@ -11,15 +11,18 @@
     <!-- 身体区域 -->
     <el-container>
       <!-- 侧边栏 -->
-      <el-aside width="200px">
-        <div class="toggle_button">
-          <i class="el-icon-s-fold"></i>
+      <el-aside :width="isCollapse ? '64px' : '200px'">
+        <div class="toggle_button" @click="menutoggle">
+          <i :class="isCollapse ? 'el-icon-s-unfold' : 'el-icon-s-fold'"></i>
         </div>
         <el-menu
           background-color="#333744"
           text-color="#fff"
           active-text-color="#409eff"
           unique-opened
+          :collapse-transition='false'
+          :collapse='isCollapse'
+          router
         >
           <el-submenu :index="item.id+''" v-for="(item) in menulsit" :key="item.id">
             <template slot="title">
@@ -28,7 +31,7 @@
             </template>
 
             <el-menu-item
-              :index="subitem.id+''"
+              :index="subitem.path+''"
               v-for="(subitem) in item.children"
               :key="subitem.id"
             >
@@ -39,7 +42,9 @@
         </el-menu>
       </el-aside>
       <!-- 主体区域 -->
-      <el-main>Main</el-main>
+      <el-main>
+          <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -59,6 +64,7 @@ export default {
         "102": "el-icon-s-order",
         "145": "el-icon-s-data",
       },
+      isCollapse:false
     };
   },
   methods: {
@@ -74,6 +80,9 @@ export default {
       if (res.meta.status != 200) return this.$Message.error("数据获取失败");
       this.menulsit = res.data;
     },
+    menutoggle(){
+        this.isCollapse = !this.isCollapse;
+    }
   },
 };
 </script>
