@@ -23,6 +23,7 @@
           :collapse-transition='false'
           :collapse='isCollapse'
           router
+          :default-active='activeItem'
         >
           <el-submenu :index="item.id+''" v-for="(item) in menulsit" :key="item.id">
             <template slot="title">
@@ -34,6 +35,7 @@
               :index="subitem.path+''"
               v-for="(subitem) in item.children"
               :key="subitem.id"
+              @click="setActiveItem(subitem.path)"
             >
               <i class="el-icon-menu"></i>
               <span>{{subitem.authName}}</span>
@@ -53,6 +55,7 @@
 export default {
   created() {
     this.getMenuList();
+    this.activeItem = window.sessionStorage.getItem('activeItem');
   },
   data() {
     return {
@@ -64,7 +67,8 @@ export default {
         "102": "el-icon-s-order",
         "145": "el-icon-s-data",
       },
-      isCollapse:false
+      isCollapse:false,
+      activeItem:''
     };
   },
   methods: {
@@ -80,8 +84,13 @@ export default {
       if (res.meta.status != 200) return this.$Message.error("数据获取失败");
       this.menulsit = res.data;
     },
+    //侧边栏切换
     menutoggle(){
         this.isCollapse = !this.isCollapse;
+    },
+    setActiveItem(name){
+        window.sessionStorage.setItem('activeItem',name);
+        this.activeItem = name;
     }
   },
 };
@@ -95,8 +104,8 @@ export default {
 .el-header {
   background-color: #373b41;
   .logo {
-    margin-top: 5px;
-    width: 50px;
+    margin-top: 8px;
+    width: 45px;
     margin-right: 15px;
   }
   span {

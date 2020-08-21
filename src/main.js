@@ -4,6 +4,7 @@ import router from './router'
 import './plugins/element.js'
 import './assets/css/global.css'
 import axios from 'axios'
+import { Message } from 'element-ui'
 
 //设置axios默认请求路径
 axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
