@@ -131,10 +131,16 @@ export default {
     color: #fff;
     text-align: center;
     cursor: pointer;
+    i{
+      margin-top: 8px;
+    }
   }
 }
 
 .el-main {
   background-color: #eaedf1;
+}
+*{
+  overflow: hidden;
 }
 </style>

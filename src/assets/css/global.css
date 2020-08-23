@@ -9,6 +9,17 @@ html,body,#app{
 body .el-table th.gutter {
     display: table-cell !important
 }
+/* 选中文本背景颜色 */
+::selection {
+    background: #e6e6e6;
+    color: black;
+  }
+  /* ScrollBar */
+  /* ::-webkit-scrollbar {
+    width: 0px;
+  } */
+
+
 .el-breadcrumb{
     margin-bottom: 15px;
 }
@@ -17,4 +28,22 @@ body .el-table th.gutter {
 }
 .el-pagination{
     margin-top: 15px;
+}
+.el-row{
+    margin-bottom: 15px;
+}
+
+.bdtop{
+    border-top: 1px solid #eee;
+}
+
+.bdbottom{
+    border-bottom: 1px solid #eee;
+}
+.el-rowbot{
+    margin-bottom: 0px !important;
+}
+.vcenter{
+    display: flex;
+    align-items: center;
 }
