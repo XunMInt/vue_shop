@@ -68,7 +68,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="queryInfo.pagenum"
-        :page-sizes="[1, 2, 5, 10]"
+        :page-sizes="[1, 2, 5, 8]"
         :page-size="queryInfo.pagesize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
@@ -124,7 +124,7 @@
       </span>
     </el-dialog>
     <!-- 修改角色对话框 -->
-    <el-dialog title="修改角色" :visible.sync="editRoleVisible" width="50%" @close='editRoleClose'>
+    <el-dialog title="修改角色" :visible.sync="editRoleVisible" width="50%" @close="editRoleClose">
       <div>
         <p>当前的用户：{{editRoleInfo.username}}</p>
         <p>当前的角色：{{editRoleInfo.role_name}}</p>
@@ -174,7 +174,7 @@ export default {
         query: "",
         // 当前页码
         pagenum: 1,
-        pagesize: 5,
+        pagesize: 8,
       },
       //用户数据
       userlist: [],
@@ -340,28 +340,36 @@ export default {
           this.$Message.info("已取消删除");
         });
     },
+    //展示修改角色对话框
     async editRole(editRoleInfo) {
       this.editRoleInfo = editRoleInfo;
-      this.editRoleVisible = true;
       let { data: res } = await this.$http.get("roles");
-      if (res.meta.status != 200) return this.$Message.error(res.meta.msg);
+      if (res.meta.status != 200) {
+        this.editRoleVisible = false;
+        return this.$Message.error(res.meta.msg);
+      }
       this.editRoleList = res.data;
+      this.editRoleVisible = true;
     },
+    //修改角色
     async modifyRole() {
       if (!this.editRoleInfoSelect)
         return this.$Message.error("你还没有选中角色");
-      let {data: res,} = await this.$http.put(`users/${this.editRoleInfo.id}/role`, {
-        rid: this.editRoleInfoSelect,
-      });
+      let { data: res } = await this.$http.put(
+        `users/${this.editRoleInfo.id}/role`,
+        {
+          rid: this.editRoleInfoSelect,
+        }
+      );
       if (res.meta.status != 200) return this.$Message.error(res.meta.msg);
       this.$Message.success(res.meta.msg);
       this.getUsersList();
       this.editRoleVisible = false;
-    },    
+    },
     //修改角色对话框关闭事件
     editRoleClose() {
-      this.editRoleInfoSelect = '';
-      this.editRoleInfo = '';
+      this.editRoleInfoSelect = "";
+      this.editRoleInfo = "";
     },
   },
 };
