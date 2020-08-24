@@ -23,6 +23,8 @@ var _roles = _interopRequireDefault(require("../components/power/roles.vue"));
 
 var _cate = _interopRequireDefault(require("../components/goods/cate.vue"));
 
+var _params = _interopRequireDefault(require("../components/goods/params.vue"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 _vue["default"].use(_vueRouter["default"]);
@@ -49,6 +51,9 @@ var routes = [{
   }, {
     path: '/categories',
     component: _cate["default"]
+  }, {
+    path: '/params',
+    component: _params["default"]
   }]
 }];
 var router = new _vueRouter["default"]({

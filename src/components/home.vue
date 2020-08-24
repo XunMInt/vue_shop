@@ -98,7 +98,7 @@ export default {
 
 <style lang="less" scoped>
 .el-container {
-  height: 100%;
+  min-height: 100%;
 }
 
 .el-header {
@@ -132,7 +132,7 @@ export default {
     text-align: center;
     cursor: pointer;
     i{
-      margin-top: 8px;
+      margin-top: 5px;
     }
   }
 }
@@ -140,7 +140,5 @@ export default {
 .el-main {
   background-color: #eaedf1;
 }
-*{
-  overflow: hidden;
-}
+
 </style>
