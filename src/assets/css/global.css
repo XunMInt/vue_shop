@@ -1,49 +1,90 @@
-html,body,#app{
-    min-width: 1080px;
+html,
+body,
+#app {
+    min-width : 1080px;
     min-height: 600px;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0%;
+    width     : 100%;
+    height    : 100%;
+    margin    : 0;
+    padding   : 0%;
 }
+
 body .el-table th.gutter {
     display: table-cell !important
 }
+
 /* 选中文本背景颜色 */
 ::selection {
     background: #e6e6e6;
-    color: black;
-  }
-  /* ScrollBar */
-  /* ::-webkit-scrollbar {
-    width: 0px;
-  } */
+    color     : black;
+}
+
+/* ScrollBar */
+::-webkit-scrollbar {
+    width : 6px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background   : #787878;
+    border-radius: 2px;
+    transition   : 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #646464;
+}
 
 
-.el-breadcrumb{
+
+.el-breadcrumb {
     margin-bottom: 15px;
 }
-.el-card{
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15) !important;
+
+.el-card {
+    box-shadow   : 0 1px 1px rgba(0, 0, 0, 0.15) !important;
+    margin-bottom: 5px;
 }
-.el-pagination{
+
+.el-pagination {
     margin-top: 15px;
 }
-.el-row{
+
+.el-row {
     margin-bottom: 15px;
 }
 
-.bdtop{
+.bdtop {
     border-top: 1px solid #eee;
 }
 
-.bdbottom{
+.bdbottom {
     border-bottom: 1px solid #eee;
 }
-.el-rowbot{
+
+.el-rowbot {
     margin-bottom: 0px !important;
 }
-.vcenter{
-    display: flex;
+
+.vcenter {
+    display    : flex;
     align-items: center;
+}
+
+.tree-table {
+    font-size: 14px !important;
+}
+
+.el-cascader-menu {
+    max-height: 220px;
+}
+
+
+
+.el-cascader-node__postfix {
+    right: 10px;
 }
