@@ -26,13 +26,50 @@
           <el-button type="primary" size="small" :disabled="isBtuDisabled" @click="addDialog">添加参数</el-button>
           <!-- 动态参数表格 -->
           <el-table :data="manyData" style="width: 100%" border stripe>
-            <el-table-column type="expand"></el-table-column>
+            <el-table-column type="expand">
+              <template slot-scope="scope">
+                <el-tag
+                  :disable-transitions="true"
+                  @close="TagClose(index,scope.row)"
+                  closable
+                  v-for="(item, index) in scope.row.attr_vals"
+                  :key="index"
+                >{{item}}</el-tag>
+                <!-- 添加标签区 -->
+                <el-input
+                  class="input-new-tag"
+                  v-if="scope.row.inputVisible"
+                  v-model="scope.row.addTagValue"
+                  ref="saveTagInput"
+                  size="small"
+                  :disable-transitions="false"
+                  @keyup.enter.native="$event.target.blur"
+                  @blur="handleInputConfirm(scope.row)"
+                ></el-input>
+                <el-button
+                  v-else
+                  class="button-new-tag"
+                  size="small"
+                  @click="showInput(scope.row)"
+                >+ New Tag</el-button>
+              </template>
+            </el-table-column>
             <el-table-column type="index" label="#"></el-table-column>
             <el-table-column prop="attr_name" label="参数名称"></el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button type="primary" icon="el-icon-edit" size="small" @click="editDialog">编辑</el-button>
-                <el-button type="danger" icon="el-icon-delete" size="small">删除</el-button>
+                <el-button
+                  type="primary"
+                  icon="el-icon-edit"
+                  size="small"
+                  @click="editDialog(scope.row)"
+                >编辑</el-button>
+                <el-button
+                  type="danger"
+                  icon="el-icon-delete"
+                  size="small"
+                  @click="delData(scope.row)"
+                >删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -41,13 +78,50 @@
           <el-button type="primary" size="small" :disabled="isBtuDisabled" @click="addDialog">添加属性</el-button>
           <!-- 静态属性表格 -->
           <el-table :data="onlyData" style="width: 100%" border stripe>
-            <el-table-column type="expand"></el-table-column>
+            <el-table-column type="expand">
+              <template slot-scope="scope">
+                <el-tag
+                  :disable-transitions="true"
+                  closable
+                  @close="TagClose(index,scope.row)"
+                  v-for="(item, index) in scope.row.attr_vals"
+                  :key="index"
+                >{{item}}</el-tag>
+                <!-- 添加标签区 -->
+                <el-input
+                  class="input-new-tag"
+                  v-if="scope.row.inputVisible"
+                  v-model="scope.row.addTagValue"
+                  ref="saveTagInput"
+                  size="small"
+                  :disable-transitions="false"
+                  @keyup.enter.native="$event.target.blur"
+                  @blur="handleInputConfirm(scope.row)"
+                ></el-input>
+                <el-button
+                  v-else
+                  class="button-new-tag"
+                  size="small"
+                  @click="showInput(scope.row)"
+                >+ New Tag</el-button>
+              </template>
+            </el-table-column>
             <el-table-column type="index" label="#"></el-table-column>
             <el-table-column prop="attr_name" label="参数名称"></el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button type="primary" icon="el-icon-edit" size="small" @click="editDialog">编辑</el-button>
-                <el-button type="danger" icon="el-icon-delete" size="small">删除</el-button>
+                <el-button
+                  type="primary"
+                  icon="el-icon-edit"
+                  size="small"
+                  @click="editDialog(scope.row)"
+                >编辑</el-button>
+                <el-button
+                  type="danger"
+                  icon="el-icon-delete"
+                  size="small"
+                  @click="delData(scope.row)"
+                >删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -119,6 +193,7 @@ export default {
       //修改数据
       editFrom: {
         attr_name: "",
+        attr_id: "",
       },
       //添加验证规则
       addRules: {
@@ -187,6 +262,8 @@ export default {
     //获取选中三级分类具体参数与属性
     async getCateData() {
       if (this.cateKeys.length !== 3) {
+        this.manyData = [];
+        this.onlyData = [];
         return;
       }
       const { data: res } = await this.$http.get(
@@ -198,6 +275,11 @@ export default {
         }
       );
       if (res.meta.status != 200) return this.$Message.error(res.meta.msg);
+      res.data.forEach((item) => {
+        item.attr_vals = item.attr_vals ? item.attr_vals.split(" ") : [];
+        item.addTagValue = "";
+        item.inputVisible = false;
+      });
       if (this.activeName == "many") {
         this.manyData = res.data;
       } else {
@@ -208,7 +290,10 @@ export default {
     addDialog() {
       this.addVisible = true;
     },
-    editDialog() {
+    //修改对话框点击事件
+    editDialog(data) {
+      this.editFrom.attr_name = data.attr_name;
+      this.editFrom.attr_id = data.attr_id;
       this.editVisible = true;
     },
     //添加对话框关闭事件
@@ -218,6 +303,8 @@ export default {
     //修改对话框关闭事件
     editDialogClose() {
       this.$refs.editFromRef.resetFields();
+      this.editFrom.attr_name = "";
+      this.editFrom.attr_id = "";
     },
     //添加属性
     async addData() {
@@ -236,8 +323,79 @@ export default {
         this.addVisible = false;
       });
     },
-    //修改属性
-    editData() {},
+    //修改数据
+    editData() {
+      this.$refs.editFromRef.validate(async (val) => {
+        if (!val) return;
+        const { data: res } = await this.$http.put(
+          `categories/${this.getCateId}/attributes/${this.editFrom.attr_id}`,
+          {
+            attr_name: this.editFrom.attr_name,
+            attr_sel: this.activeName,
+          }
+        );
+        if (res.meta.status != 200) return this.$Message.error(res.meta.msg);
+        this.$Message.success(res.meta.msg);
+        this.getCateData();
+        this.editVisible = false;
+      });
+    },
+    //删除数据
+    async delData(data) {
+      this.$confirm("是否删除该分类?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(async () => {
+          const { data: res } = await this.$http.delete(
+            `categories/${data.cat_id}/attributes/${data.attr_id}`
+          );
+          if (res.meta.status != 200) return this.$Message.error(res.meta.msg);
+          this.$Message.success(res.meta.msg);
+          this.getCateData();
+        })
+        .catch(() => {
+          this.$Message.info("已取消删除");
+        });
+    },
+    //tag添加焦点移除事件
+    handleInputConfirm(row) {
+      if (row.addTagValue.trim().length === 0) {
+        row.inputVisible = false;
+        row.addTagValue = "";
+        return;
+      }
+      row.attr_vals.push(row.addTagValue.trim());
+      row.inputVisible = false;
+      //服务器请求添加参数
+      this.putTag(row);
+    },
+    // 修改或删除Tag
+    async putTag(row) {
+      const { data: res } = await this.$http.put(
+        `categories/${row.cat_id}/attributes/${row.attr_id}`,
+        {
+          attr_name: row.attr_name,
+          attr_sel: row.attr_sel,
+          attr_vals: row.attr_vals.join(" "),
+        }
+      );
+      if (res.meta.status != 200) return this.$Message.error(res.meta.msg);
+      this.$Message.success(res.meta.msg);
+      row.addTagValue = "";
+    },
+    //添加标签点击事件
+    showInput(row) {
+      row.inputVisible = true;
+      this.$nextTick((_) => {
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
+    TagClose(i, row) {
+      row.attr_vals.splice(i, 1);
+      this.putTag(row);
+    },
   },
 };
 </script>
@@ -251,5 +409,14 @@ export default {
 }
 .el-table {
   margin: 15px 0;
+}
+.el-tag {
+  margin: 5px;
+}
+
+.input-new-tag,
+.button-new-tag {
+  margin: 5px;
+  width: 90px;
 }
 </style>
