@@ -66,5 +66,15 @@ _vue["default"].use(_elementUi.Tabs);
 
 _vue["default"].use(_elementUi.TabPane);
 
+_vue["default"].use(_elementUi.Step);
+
+_vue["default"].use(_elementUi.Steps);
+
+_vue["default"].use(_elementUi.Checkbox);
+
+_vue["default"].use(_elementUi.CheckboxGroup);
+
+_vue["default"].use(_elementUi.Upload);
+
 _vue["default"].prototype.$Message = _elementUi.Message;
 _vue["default"].prototype.$confirm = _elementUi.MessageBox.confirm;

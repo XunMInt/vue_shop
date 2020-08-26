@@ -83,8 +83,18 @@ body .el-table th.gutter {
     max-height: 220px;
 }
 
-
-
 .el-cascader-node__postfix {
     right: 10px;
+}
+
+.el-steps{
+    margin: 15px 0;
+}
+
+.el-step__title{
+    font-size: 14px;
+}
+
+.ql-container,.ql-editor{
+    min-height: 400px;
 }
