@@ -29,6 +29,8 @@ var _list = _interopRequireDefault(require("../components/goods/list.vue"));
 
 var _add = _interopRequireDefault(require("../components/goods/add.vue"));
 
+var _orders = _interopRequireDefault(require("../components/orders/orders.vue"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 _vue["default"].use(_vueRouter["default"]);
@@ -64,6 +66,9 @@ var routes = [{
   }, {
     path: '/goods_add',
     component: _add["default"]
+  }, {
+    path: '/orders',
+    component: _orders["default"]
   }]
 }];
 var router = new _vueRouter["default"]({

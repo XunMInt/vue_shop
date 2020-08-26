@@ -250,7 +250,7 @@ export default {
         params: this.queryInfo,
       });
       if (res.meta.status != 200)
-        return this.$Message.error("获取用户列表失败");
+        return this.$Message.error(res.meta.msg);
       this.userlist = res.data.users;
       this.total = res.data.total;
     },

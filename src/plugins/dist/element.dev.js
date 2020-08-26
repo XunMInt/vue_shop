@@ -76,5 +76,9 @@ _vue["default"].use(_elementUi.CheckboxGroup);
 
 _vue["default"].use(_elementUi.Upload);
 
+_vue["default"].use(_elementUi.Timeline);
+
+_vue["default"].use(_elementUi.TimelineItem);
+
 _vue["default"].prototype.$Message = _elementUi.Message;
 _vue["default"].prototype.$confirm = _elementUi.MessageBox.confirm;
