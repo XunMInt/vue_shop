@@ -107,6 +107,9 @@ var routes = [{
   path: '/login',
   component: Login
 }, {
+  path: '/',
+  redirect: '/welcome'
+}, {
   path: '/home',
   component: Home,
   redirect: '/welcome',
@@ -143,7 +146,7 @@ var routes = [{
   }]
 }];
 var router = new _vueRouter["default"]({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes: routes
 }); //挂载路由守卫

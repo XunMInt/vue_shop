@@ -33,6 +33,7 @@ Vue.use(VueRouter)
 
 const routes = [
   { path: '/login', component: Login },
+  { path: '/', redirect: '/welcome' },
   {
     path: '/home', component: Home, redirect: '/welcome', children: [
       { path: '/welcome', component: Welcome },
@@ -50,7 +51,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })

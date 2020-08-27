@@ -32,7 +32,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 // for snow theme
 // for bubble theme
 //设置axios默认请求路径
-_axios["default"].defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'; //请求拦截器
+_axios["default"].defaults.baseURL = 'http://shopapi.xmint.cn/api/private/v1/'; //请求拦截器
 
 _axios["default"].interceptors.request.use(function (config) {
   _nprogress["default"].start(); //为请求头添加token字段
