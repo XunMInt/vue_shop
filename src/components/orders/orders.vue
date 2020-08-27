@@ -51,7 +51,7 @@
       ></el-pagination>
     </el-card>
     <!-- 修改对话框 -->
-    <el-dialog title="提示" :visible.sync="editVisible" width="50%" @close="editClose">
+    <el-dialog title="修改地址" :visible.sync="editVisible" width="50%" @close="editClose">
       <el-form ref="editFormRef" :model="editForm" :rules="editRules" label-width="88px">
         <el-form-item label="省市区/县" prop="add1">
           <el-cascader
@@ -70,7 +70,7 @@
       </span>
     </el-dialog>
     <!-- 查看物流信息对话框 -->
-    <el-dialog title="提示" :visible.sync="logisticsVisible" width="50%">
+    <el-dialog title="物流信息" :visible.sync="logisticsVisible" width="50%">
       <el-timeline >
         <el-timeline-item
           v-for="(activity, index) in logisticsData"
@@ -147,12 +147,13 @@ export default {
     editClose() {
       this.$refs.editFormRef.resetFields();
     },
+    //物流信息对话框弹出事件
     async logisticsDialog() {
-      this.logisticsVisible = true;
       const { data: res } = await this.$http.get("/kuaidi/1106975712662");
       if (res.meta.status != 200) return this.$Message.error(res.meta.msg);
       this.logisticsData = res.data;
-    },
+      this.logisticsVisible = true;
+    }
   },
 };
 </script>

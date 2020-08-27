@@ -22,6 +22,10 @@ require("quill/dist/quill.snow.css");
 
 require("quill/dist/quill.bubble.css");
 
+var _nprogress = _interopRequireDefault(require("nprogress"));
+
+require("nprogress/nprogress.css");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // import styles
@@ -31,8 +35,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 _axios["default"].defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'; //请求拦截器
 
 _axios["default"].interceptors.request.use(function (config) {
-  //为请求头添加token字段
+  _nprogress["default"].start(); //为请求头添加token字段
+
+
   config.headers.Authorization = window.sessionStorage.getItem('token');
+  return config;
+}); //响应拦截器
+
+
+_axios["default"].interceptors.response.use(function (config) {
+  _nprogress["default"].done();
+
   return config;
 });
 

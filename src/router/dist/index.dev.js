@@ -9,71 +9,137 @@ var _vue = _interopRequireDefault(require("vue"));
 
 var _vueRouter = _interopRequireDefault(require("vue-router"));
 
-var _login = _interopRequireDefault(require("../components/login.vue"));
-
-var _home = _interopRequireDefault(require("../components/home.vue"));
-
-var _welcome = _interopRequireDefault(require("../components/welcome.vue"));
-
-var _users = _interopRequireDefault(require("../components/user/users.vue"));
-
-var _rights = _interopRequireDefault(require("../components/power/rights.vue"));
-
-var _roles = _interopRequireDefault(require("../components/power/roles.vue"));
-
-var _cate = _interopRequireDefault(require("../components/goods/cate.vue"));
-
-var _params = _interopRequireDefault(require("../components/goods/params.vue"));
-
-var _list = _interopRequireDefault(require("../components/goods/list.vue"));
-
-var _add = _interopRequireDefault(require("../components/goods/add.vue"));
-
-var _orders = _interopRequireDefault(require("../components/orders/orders.vue"));
-
-var _reports = _interopRequireDefault(require("../components/report/reports.vue"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+// import Login from './components/Login.vue'
+var Login = function Login() {
+  return Promise.resolve().then(function () {
+    return _interopRequireWildcard(require('../components/login.vue'));
+  });
+}; // import Home from './components/Home.vue'
+
+
+var Home = function Home() {
+  return Promise.resolve().then(function () {
+    return _interopRequireWildcard(require('../components/home.vue'));
+  });
+}; // import Welcome from './components/Welcome.vue'
+
+
+var Welcome = function Welcome() {
+  return Promise.resolve().then(function () {
+    return _interopRequireWildcard(require('../components/welcome.vue'));
+  });
+}; // import Users from './components/user/Users.vue'
+
+
+var Users = function Users() {
+  return Promise.resolve().then(function () {
+    return _interopRequireWildcard(require('../components/user/users.vue'));
+  });
+}; // import Rights from './components/power/Rights.vue'
+
+
+var Rights = function Rights() {
+  return Promise.resolve().then(function () {
+    return _interopRequireWildcard(require('../components/power/rights.vue'));
+  });
+}; // import Roles from './components/power/Roles.vue'
+
+
+var Roles = function Roles() {
+  return Promise.resolve().then(function () {
+    return _interopRequireWildcard(require('../components/power/roles.vue'));
+  });
+}; // import Cate from './components/goods/Cate.vue'
+
+
+var Cate = function Cate() {
+  return Promise.resolve().then(function () {
+    return _interopRequireWildcard(require('../components/goods/cate.vue'));
+  });
+}; // import Params from './components/goods/Params.vue'
+
+
+var Params = function Params() {
+  return Promise.resolve().then(function () {
+    return _interopRequireWildcard(require('../components/goods/params.vue'));
+  });
+}; // import GoodsList from './components/goods/List.vue'
+
+
+var GoodsList = function GoodsList() {
+  return Promise.resolve().then(function () {
+    return _interopRequireWildcard(require('../components/goods/list.vue'));
+  });
+}; // import Add from './components/goods/Add.vue'
+
+
+var Add = function Add() {
+  return Promise.resolve().then(function () {
+    return _interopRequireWildcard(require('../components/goods/add.vue'));
+  });
+}; // import Order from './components/order/Order.vue'
+
+
+var Order = function Order() {
+  return Promise.resolve().then(function () {
+    return _interopRequireWildcard(require('../components/orders/orders.vue'));
+  });
+}; // import Report from './components/report/Report.vue'
+
+
+var Report = function Report() {
+  return Promise.resolve().then(function () {
+    return _interopRequireWildcard(require('../components/report/reports.vue'));
+  });
+};
 
 _vue["default"].use(_vueRouter["default"]);
 
 var routes = [{
   path: '/login',
-  component: _login["default"]
+  component: Login
 }, {
   path: '/home',
-  component: _home["default"],
+  component: Home,
   redirect: '/welcome',
   children: [{
     path: '/welcome',
-    component: _welcome["default"]
+    component: Welcome
   }, {
     path: '/users',
-    component: _users["default"]
+    component: Users
   }, {
     path: '/rights',
-    component: _rights["default"]
+    component: Rights
   }, {
     path: '/roles',
-    component: _roles["default"]
+    component: Roles
   }, {
     path: '/categories',
-    component: _cate["default"]
+    component: Cate
   }, {
     path: '/params',
-    component: _params["default"]
+    component: Params
   }, {
     path: '/goods',
-    component: _list["default"]
+    component: GoodsList
   }, {
     path: '/goods_add',
-    component: _add["default"]
+    component: Add
   }, {
     path: '/orders',
-    component: _orders["default"]
+    component: Order
   }, {
     path: '/reports',
-    component: _reports["default"]
+    component: Report
   }]
 }];
 var router = new _vueRouter["default"]({
